@@ -132,14 +132,16 @@ export default function TimeIntervals() {
 
   const weekdays = getWeekDays()
 
-  function handleNextStep() {
-    router.push('/register/time-intervals')
+  async function handleNextStep() {
+   await  router.push('/register/update-profile')
   }
 
   const intervals = watch('intervals')
 
   async function handleSetTimeIntervals({intervals}: TimeIntervalsFormOutput) {
     await api.post('/users/time-intervals', {intervals})
+
+    handleNextStep()
   }
 
   return (

@@ -8,9 +8,8 @@ import {
   AuthError,
   ConnectBox,
   ConnectItem,
-  UserEmptyImage,
-  UserImage,
 } from './styles'
+import { Photo } from '@/components/Photo'
 
 export default function ConnectCalendar() {
   const { data: session } = useSession()
@@ -47,11 +46,7 @@ export default function ConnectCalendar() {
           {isSignedIn ? (
             <Button variant="secondary" disabled>
               Conectado
-              {session?.user?.avatar_url ? (
-                <UserImage src={session?.user.avatar_url} alt="Your photo" />
-              ) : (
-                <UserEmptyImage />
-              )}
+              <Photo img={session?.user?.avatar_url} size='sm'/>
             </Button>
           ) : (
             <Button variant="secondary" onClick={handleSignIn}>

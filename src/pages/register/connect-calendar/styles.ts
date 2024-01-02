@@ -18,21 +18,6 @@ export const ConnectItem = styled('div', {
   borderRadius: '$md',
 })
 
-export const UserImage = styled('img', {
-  width: '$8',
-  height: '$8',
-  borderRadius: '$full',
-
-  backgroundColor: '$gray400',
-})
-export const UserEmptyImage = styled('div', {
-  width: '$8',
-  height: '$8',
-  borderRadius: '$full',
-
-  backgroundColor: '$gray400',
-})
-
 export const AuthError = styled(Text, {
   color: '#f75a68',
   marginBottom: '$4',
