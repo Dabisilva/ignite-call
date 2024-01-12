@@ -22,9 +22,7 @@ export default async function handler(
   })
 
   if (userExists) {
-    return res.status(400).json({
-      message: 'Username already exists.',
-    })
+    return res.status(400).end()
   }
 
   const user = await prisma.user.create({
