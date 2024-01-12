@@ -42,7 +42,7 @@ export function CaimUsernameForm() {
     <>
       <Form as="form" onSubmit={handleSubmit(handleClaimUsername)}>
         <TextInput
-          crossOrigin
+          crossOrigin={undefined}
           size="sm"
           prefix="calender.com/"
           placeholder="seu-usuario"
