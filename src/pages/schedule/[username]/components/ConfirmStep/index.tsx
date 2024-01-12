@@ -66,7 +66,11 @@ export function ConfirmStep({ schedulingDate, onCancel }: ConfirmStep) {
 
       <label>
         <Text size="sm">Nome Completo</Text>
-        <TextInput crossOrigin={undefined} placeholder="Seu nome" {...register('name')} />
+        <TextInput
+          crossOrigin={undefined}
+          placeholder="Seu nome"
+          {...register('name')}
+        />
         {errors.name && <FormError size="sm">{errors.name.message}</FormError>}
       </label>
 
