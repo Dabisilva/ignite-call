@@ -79,7 +79,7 @@ export default function Register() {
           <label>
             <Text size="sm">Nome de usuário</Text>
             <TextInput
-               crossOrigin={undefined}
+              crossOrigin={undefined}
               size="sm"
               prefix="cal.com/"
               placeholder="seu-usuario"
@@ -91,7 +91,7 @@ export default function Register() {
           </label>
           <label>
             <Text size="sm">Nome completo</Text>
-            <TextInput  crossOrigin={undefined} size="sm" placeholder="seu nome" {...register('name')} />
+            <TextInput crossOrigin={undefined} size="sm" placeholder="seu nome" {...register('name')} />
             {errors.name && (
               <FormError size="sm">{errors.name?.message}</FormError>
             )}
