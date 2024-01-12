@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 
 import { CalendarWeeks } from '@/@types/calendar'
 
-type GetCalendarWeeksProps = {
+type UseCalendarWeeksProps = {
   currentDate: Dayjs
   blockedDates?: {
     blockedWeekDays: number[]
@@ -11,10 +11,10 @@ type GetCalendarWeeksProps = {
   }
 }
 
-function getCalendarWeeks({
+function useCalendarWeeks({
   currentDate,
   blockedDates,
-}: GetCalendarWeeksProps) {
+}: UseCalendarWeeksProps) {
   const calendarWeeks = useMemo(() => {
     if (!blockedDates) {
       return []
@@ -88,4 +88,4 @@ function getCalendarWeeks({
   return calendarWeeks
 }
 
-export { getCalendarWeeks }
+export { useCalendarWeeks }

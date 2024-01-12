@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import dayjs from 'dayjs'
 import { CaretLeft, CaretRight } from 'phosphor-react'
 import { getWeekDays } from '@/utils/get-week-days'
-import { getCalendarWeeks } from '@/utils/get-calendar-weeks'
+import { useCalendarWeeks } from '@/utils/get-calendar-weeks'
 
 import {
   CalendarActions,
@@ -65,7 +65,7 @@ export function Calendar({ onDateSelected, username }: CalendarProps) {
     queryFn: getAvailableHours,
   })
 
-  const calendarWeeks = getCalendarWeeks({
+  const calendarWeeks = useCalendarWeeks({
     currentDate,
     blockedDates,
   })
