@@ -1,35 +1,35 @@
-import { Button, Text, TextArea, TextInput } from "@ignite-ui/react";
-import { CalendarBlank, Clock } from "phosphor-react";
-import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import dayjs from "dayjs";
-import { api } from "@/lib/axios";
-import { useRouter } from "next/router";
+import { Button, Text, TextArea, TextInput } from '@ignite-ui/react'
+import { CalendarBlank, Clock } from 'phosphor-react'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import dayjs from 'dayjs'
+import { api } from '@/lib/axios'
+import { useRouter } from 'next/router'
 
-import { ConfirmForm, FormActions, FormError, FormHeader } from "./styles";
+import { ConfirmForm, FormActions, FormError, FormHeader } from './styles'
 
 const confirmFormSchema = z.object({
   name: z.string().min(4, {
-    message: "Nome precisa de no minimo 4 letras.",
+    message: 'Nome precisa de no minimo 4 letras.',
   }),
-  email: z.string().email({ message: "Digite um e-mail válido" }),
+  email: z.string().email({ message: 'Digite um e-mail válido' }),
   observations: z.string().nullable(),
-});
+})
 
-type ConfirmFormData = z.infer<typeof confirmFormSchema>;
+type ConfirmFormData = z.infer<typeof confirmFormSchema>
 
 type ConfirmStep = {
-  schedulingDate: Date;
-  onCancel: () => void;
-};
+  schedulingDate: Date
+  onCancel: () => void
+}
 
 export function ConfirmStep({ schedulingDate, onCancel }: ConfirmStep) {
-  const router = useRouter();
-  const username = String(router.query.username);
+  const router = useRouter()
+  const username = String(router.query.username)
 
-  const describeDate = dayjs(schedulingDate).format("DD [de] MMMM [de] YYYY");
-  const describeTime = dayjs(schedulingDate).format("HH:mm[h]");
+  const describeDate = dayjs(schedulingDate).format('DD [de] MMMM [de] YYYY')
+  const describeTime = dayjs(schedulingDate).format('HH:mm[h]')
 
   const {
     register,
@@ -37,16 +37,16 @@ export function ConfirmStep({ schedulingDate, onCancel }: ConfirmStep) {
     formState: { isSubmitting, errors },
   } = useForm<ConfirmFormData>({
     resolver: zodResolver(confirmFormSchema),
-  });
+  })
 
   async function handleConfirmScheduling(data: ConfirmFormData) {
-    const { name, email, observations } = data;
+    const { name, email, observations } = data
     await api.post(`/users/${username}/schedule`, {
       name,
       email,
       observations,
-      date: schedulingDate
-    });
+      date: schedulingDate,
+    })
 
     onCancel()
   }
@@ -66,7 +66,7 @@ export function ConfirmStep({ schedulingDate, onCancel }: ConfirmStep) {
 
       <label>
         <Text size="sm">Nome Completo</Text>
-        <TextInput placeholder="Seu nome" {...register("name")} />
+        <TextInput placeholder="Seu nome" {...register('name')} />
         {errors.name && <FormError size="sm">{errors.name.message}</FormError>}
       </label>
 
@@ -75,7 +75,7 @@ export function ConfirmStep({ schedulingDate, onCancel }: ConfirmStep) {
         <TextInput
           type="email"
           placeholder="johndoe@exemple.com"
-          {...register("email")}
+          {...register('email')}
         />
         {errors.email && (
           <FormError size="sm">{errors.email.message}</FormError>
@@ -84,7 +84,7 @@ export function ConfirmStep({ schedulingDate, onCancel }: ConfirmStep) {
 
       <label>
         <Text size="sm">Observações</Text>
-        <TextArea {...register("observations")} />
+        <TextArea {...register('observations')} />
       </label>
 
       <FormActions>
@@ -96,5 +96,5 @@ export function ConfirmStep({ schedulingDate, onCancel }: ConfirmStep) {
         </Button>
       </FormActions>
     </ConfirmForm>
-  );
+  )
 }

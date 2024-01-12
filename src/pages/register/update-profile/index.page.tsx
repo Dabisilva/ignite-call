@@ -5,24 +5,24 @@ import {
   MultiStep,
   Text,
   TextArea,
-} from "@ignite-ui/react";
-import { NextSeo } from "next-seo";
+} from '@ignite-ui/react'
+import { NextSeo } from 'next-seo'
 
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Container, Header } from "../styles";
-import { FormAnnotation, ProfileBox } from "./styles";
-import { useSession } from "next-auth/react";
-import { api } from "@/lib/axios";
-import { useRouter } from "next/router";
+import { Container, Header } from '../styles'
+import { FormAnnotation, ProfileBox } from './styles'
+import { useSession } from 'next-auth/react'
+import { api } from '@/lib/axios'
+import { useRouter } from 'next/router'
 
 const updateProfileSchema = z.object({
   bio: z.string(),
-});
+})
 
-type UpdateProfileData = z.infer<typeof updateProfileSchema>;
+type UpdateProfileData = z.infer<typeof updateProfileSchema>
 
 export default function UpdateProfile() {
   const {
@@ -31,17 +31,17 @@ export default function UpdateProfile() {
     formState: { isSubmitting },
   } = useForm<UpdateProfileData>({
     resolver: zodResolver(updateProfileSchema),
-  });
+  })
 
-  const { data: session } = useSession();
-  const router = useRouter();
+  const { data: session } = useSession()
+  const router = useRouter()
 
   async function handleUpdateProfile(data: UpdateProfileData) {
-    await api.put("/users/profile", {
+    await api.put('/users/profile', {
       bio: data.bio,
-    });
+    })
 
-    await router.push(`/schedule/${session?.user.username}`);
+    await router.push(`/schedule/${session?.user.username}`)
   }
 
   return (
@@ -65,7 +65,7 @@ export default function UpdateProfile() {
           </label>
           <label>
             <Text size="sm">Sobre você</Text>
-            <TextArea {...register("bio")} />
+            <TextArea {...register('bio')} />
             <FormAnnotation size="sm">
               Fale um pouco sobre você. Isto será exibido em sua página pessoal.
             </FormAnnotation>
@@ -77,5 +77,5 @@ export default function UpdateProfile() {
         </ProfileBox>
       </Container>
     </>
-  );
+  )
 }

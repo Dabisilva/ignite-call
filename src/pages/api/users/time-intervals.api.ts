@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
-import { z } from "zod";
-import { prisma } from "@/lib/prisma";
+import { NextApiRequest, NextApiResponse } from 'next'
+import { getServerSession } from 'next-auth'
+import { z } from 'zod'
+import { prisma } from '@/lib/prisma'
 
-import { buildNextAuthOption } from "../auth/[...nextauth].api";
+import { buildNextAuthOption } from '../auth/[...nextauth].api'
 
 const timeIntervalsBodySchema = z.object({
   intervals: z.array(
@@ -11,29 +11,29 @@ const timeIntervalsBodySchema = z.object({
       weekDay: z.number(),
       startTimeInMinutes: z.number(),
       endTimeInMinutes: z.number(),
-    })
+    }),
   ),
-});
+})
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
-  if (req.method !== "POST") {
-    return res.status(405).end();
+  if (req.method !== 'POST') {
+    return res.status(405).end()
   }
 
   const session = await getServerSession(
     req,
     res,
-    buildNextAuthOption(req, res)
-  );
+    buildNextAuthOption(req, res),
+  )
 
   if (!session) {
-    return res.status(401).end();
+    return res.status(401).end()
   }
 
-  const { intervals } = timeIntervalsBodySchema.parse(req.body);
+  const { intervals } = timeIntervalsBodySchema.parse(req.body)
 
   await Promise.all(
     intervals.map((interval) => {
@@ -48,5 +48,5 @@ export default async function handler(
     }),
   )
 
-  return res.status(204).end();
+  return res.status(204).end()
 }

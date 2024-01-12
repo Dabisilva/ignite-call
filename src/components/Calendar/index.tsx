@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from "react";
-import dayjs from "dayjs";
-import { CaretLeft, CaretRight } from "phosphor-react";
-import { getWeekDays } from "@/utils/get-week-days";
-import { getCalendarWeeks } from "@/utils/get-calendar-weeks";
+import React, { useState } from 'react'
+import dayjs from 'dayjs'
+import { CaretLeft, CaretRight } from 'phosphor-react'
+import { getWeekDays } from '@/utils/get-week-days'
+import { getCalendarWeeks } from '@/utils/get-calendar-weeks'
 
 import {
   CalendarActions,
@@ -11,40 +11,39 @@ import {
   CalendarDay,
   CalendarHeader,
   CalendarTitle,
-} from "./styles";
-import { api } from "@/lib/axios";
-import { useQuery } from "@tanstack/react-query";
+} from './styles'
+import { api } from '@/lib/axios'
+import { useQuery } from '@tanstack/react-query'
 
 type CalendarProps = {
-  selectedDate: Date | null;
-  onDateSelected: (date: Date) => void;
+  onDateSelected: (date: Date) => void
   username: string
-};
-
-type BlockedDates = {
-  blockedWeekDays: number[];
-  blockedDates: number[];
 }
 
-export function Calendar({ selectedDate, onDateSelected, username }: CalendarProps) {
-  const shortWeekDays = getWeekDays({ short: true });
+type BlockedDates = {
+  blockedWeekDays: number[]
+  blockedDates: number[]
+}
+
+export function Calendar({ onDateSelected, username }: CalendarProps) {
+  const shortWeekDays = getWeekDays({ short: true })
 
   const [currentDate, setCurrentDate] = useState(() => {
-    return dayjs().set("date", 1);
-  });
+    return dayjs().set('date', 1)
+  })
 
   function handlePreviousMonth() {
-    const previousMonthDate = currentDate.subtract(1, "month");
-    setCurrentDate(previousMonthDate);
+    const previousMonthDate = currentDate.subtract(1, 'month')
+    setCurrentDate(previousMonthDate)
   }
 
   function handleNextMonth() {
-    const previousMonthDate = currentDate.add(1, "month");
-    setCurrentDate(previousMonthDate);
+    const previousMonthDate = currentDate.add(1, 'month')
+    setCurrentDate(previousMonthDate)
   }
 
-  const currentMonth = currentDate.format("MMMM");
-  const currentYear = currentDate.format("YYYY");
+  const currentMonth = currentDate.format('MMMM')
+  const currentYear = currentDate.format('YYYY')
 
   async function getAvailableHours() {
     const response = await api.get(`/users/${username}/blocked-dates/`, {
@@ -52,19 +51,23 @@ export function Calendar({ selectedDate, onDateSelected, username }: CalendarPro
         year: currentDate.get('year'),
         month: currentDate.get('month') + 1,
       },
-    });
+    })
 
-    return response.data;
+    return response.data
   }
 
   const { data: blockedDates } = useQuery<BlockedDates>({
-    queryKey: ['blocked-dates', currentDate.get('year'),currentDate.get('month'), ],
+    queryKey: [
+      'blocked-dates',
+      currentDate.get('year'),
+      currentDate.get('month'),
+    ],
     queryFn: getAvailableHours,
   })
 
-  const calendarWeeks =  getCalendarWeeks({
+  const calendarWeeks = getCalendarWeeks({
     currentDate,
-    blockedDates
+    blockedDates,
   })
 
   return (
@@ -100,7 +103,7 @@ export function Calendar({ selectedDate, onDateSelected, username }: CalendarPro
                     disabled={disabled}
                     onClick={() => onDateSelected(date.toDate())}
                   >
-                    {date.get("date")}
+                    {date.get('date')}
                   </CalendarDay>
                 </td>
               ))}
@@ -109,5 +112,5 @@ export function Calendar({ selectedDate, onDateSelected, username }: CalendarPro
         </tbody>
       </CalendarBody>
     </CalendarContainer>
-  );
+  )
 }

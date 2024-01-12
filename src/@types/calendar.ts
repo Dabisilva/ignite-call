@@ -1,13 +1,13 @@
-import { Dayjs } from "dayjs";
+import { Dayjs } from 'dayjs'
 
 interface CalendarWeek {
-  week: number;
+  week: number
   days: Array<{
-    date: Dayjs;
-    disabled: boolean;
-  }>;
+    date: Dayjs
+    disabled: boolean
+  }>
 }
 
-type CalendarWeeks = CalendarWeek[];
+type CalendarWeeks = CalendarWeek[]
 
-export type { CalendarWeek, CalendarWeeks };
+export type { CalendarWeek, CalendarWeeks }

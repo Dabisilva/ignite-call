@@ -1,32 +1,32 @@
-import { useSession, signIn } from "next-auth/react";
-import { Button, Heading, MultiStep, Text } from "@ignite-ui/react";
-import { ArrowRight } from "phosphor-react";
-import { useRouter } from "next/router";
+import { useSession, signIn } from 'next-auth/react'
+import { Button, Heading, MultiStep, Text } from '@ignite-ui/react'
+import { ArrowRight } from 'phosphor-react'
+import { useRouter } from 'next/router'
 
-import { Container, Header } from "../styles";
-import { AuthError, ConnectBox, ConnectItem } from "./styles";
-import { Photo } from "@/components/Photo";
-import { NextSeo } from "next-seo";
+import { Container, Header } from '../styles'
+import { AuthError, ConnectBox, ConnectItem } from './styles'
+import { Photo } from '@/components/Photo'
+import { NextSeo } from 'next-seo'
 
 export default function ConnectCalendar() {
-  const { data: session } = useSession();
+  const { data: session } = useSession()
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const isSignedIn = !!session;
-  const hasAuthError = !!router.query.error;
+  const isSignedIn = !!session
+  const hasAuthError = !!router.query.error
 
   async function handleSignIn() {
-    await signIn("google", { callbackUrl: "/register/connect-calendar" });
+    await signIn('google', { callbackUrl: '/register/connect-calendar' })
   }
 
   function handleNextStep() {
-    router.push("/register/time-intervals");
+    router.push('/register/time-intervals')
   }
 
   return (
     <>
-      <NextSeo title="Conecte sua agenda do google | Ignite Call" noindex/>
+      <NextSeo title="Conecte sua agenda do google | Ignite Call" noindex />
 
       <Container>
         <Header>
@@ -70,5 +70,5 @@ export default function ConnectCalendar() {
         </ConnectBox>
       </Container>
     </>
-  );
+  )
 }
